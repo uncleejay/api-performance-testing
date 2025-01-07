@@ -1,3 +1,4 @@
+import { check } from 'k6';
 import http from 'k6/http';
 
 export default function () {
@@ -15,4 +16,9 @@ export default function () {
 
     // send a post request and save response as a variable
     const res = http.post(url, payload, params);
+
+    // check that response is 200
+    check(res, {
+        'response code was 200': (res) => res.status === 200,
+    });
 }
